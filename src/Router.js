@@ -8,8 +8,8 @@ const Router = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" exact element={<App />} /> {/*精確匹配 exact*/}
-      <Route path="/login/:nickname" element={<Login />} />
-      <Route component={NotFound} />
+      <Route path="/login" element={<Login />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   </BrowserRouter>
 );
