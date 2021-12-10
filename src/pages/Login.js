@@ -2,12 +2,19 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 class Login extends React.Component {
+  emailRef = React.createRef();
+  passwordRef = React.createRef();
+
   handleSubmit = (event) => {
     // 1. 阻止默認事件行為
     event.preventDefault();
 
     // 2. 獲取表單數據
-
+    const formData = {
+      email: this.emailRef.current.value,
+      password: this.passwordRef.current.value,
+    };
+    console.log(formData);
     // 3. 處理登入邏輯
 
     // 4. 跳轉到首頁
@@ -22,13 +29,23 @@ class Login extends React.Component {
           <div className="field">
             <label className="label">Email</label>
             <div className="control">
-              <input className="input" type="text" placeholder="Email" />
+              <input
+                className="input"
+                type="text"
+                placeholder="Email"
+                ref={this.emailRef}
+              />
             </div>
           </div>
           <div className="field">
             <label className="label">Password</label>
             <div className="control">
-              <input className="input" type="text" placeholder="Password" />
+              <input
+                className="input"
+                type="text"
+                placeholder="Password"
+                ref={this.passwordRef}
+              />
             </div>
           </div>
           <div className="control">
