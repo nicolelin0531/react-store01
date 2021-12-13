@@ -2,24 +2,28 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 class Login extends React.Component {
-  emailRef = React.createRef();
-  passwordRef = React.createRef();
+  state = {
+    email: "",
+    password: "",
+  };
 
   handleSubmit = (event) => {
     // 1. 阻止默認事件行為
     event.preventDefault();
 
     // 2. 獲取表單數據
-    const formData = {
-      email: this.emailRef.current.value,
-      password: this.passwordRef.current.value,
-    };
-    console.log(formData);
+    console.log(this.state);
     // 3. 處理登入邏輯
 
     // 4. 跳轉到首頁
     // this.props.history.push("/");
     this.props.navigate("/");
+  };
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
   };
 
   render() {
@@ -33,7 +37,9 @@ class Login extends React.Component {
                 className="input"
                 type="text"
                 placeholder="Email"
-                ref={this.emailRef}
+                name="email"
+                value={this.state.email}
+                onChange={this.handleChange}
               />
             </div>
           </div>
@@ -44,7 +50,9 @@ class Login extends React.Component {
                 className="input"
                 type="text"
                 placeholder="Password"
-                ref={this.passwordRef}
+                name="password"
+                value={this.state.password}
+                onChange={this.handleChange}
               />
             </div>
           </div>
