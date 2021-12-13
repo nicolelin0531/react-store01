@@ -51,7 +51,7 @@ class Products extends React.Component {
       image: "images/6.jpg",
       tags: "26集",
       price: 800,
-      status: "available",
+      status: "unavailable",
     },
   ];
   render() {
