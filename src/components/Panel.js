@@ -1,21 +1,40 @@
+/**
+ * 1. 一次渲染，隨需調用
+ * 2. 裝載組件
+ *   （1). 子組件作為參數傳遞並被渲染
+ *    (2). 子組件可以關閉彈出層
+ *    (3). 子組件與調用者可以通訊
+ */
+
 import React from "react";
 import { render } from "react-dom";
 
 class Panel extends React.Component {
   state = {
     active: false,
+    component: null,
+    callback: () => {},
   };
 
-  open = () => {
+  open = (options) => {
+    const { component, callback } = options;
+    const _key = new Date().getTime();
+    const _component = React.createElement(component, {
+      close: this.close,
+      key: _key,
+    });
     this.setState({
       active: true,
+      component: _component,
+      callback: callback,
     });
   };
 
-  close = () => {
+  close = (data) => {
     this.setState({
       active: false,
     });
+    this.state.callback(data);
   };
 
   render() {
@@ -31,7 +50,7 @@ class Panel extends React.Component {
             <span className="close" onClick={this.close}>
               x
             </span>
-            <p className="has-text-centered">Children Component</p>
+            {this.state.component}
           </div>
         </div>
       </div>
