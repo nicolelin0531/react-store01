@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "commons/axios";
 import ToolBox from "components/ToolBox";
 import Product from "components/Product";
 
@@ -8,14 +9,11 @@ class Products extends React.Component {
   };
 
   componentDidMount() {
-    fetch("http://localhost:3003/products")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        this.setState({
-          products: data,
-        });
+    axios.get("/products").then((response) => {
+      this.setState({
+        products: response.data,
       });
+    });
   }
 
   render() {
