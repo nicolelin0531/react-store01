@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "commons/axios";
+import { toast } from "react-toastify";
 import Panel from "components/Panel";
 import { formatPrice } from "commons/helper";
 import EditInventory from "components/EditInventory";
@@ -18,6 +20,33 @@ class Product extends React.Component {
         }
       },
     });
+  };
+
+  addCart = async () => {
+    try {
+      const { id, name, image, price } = this.props.product;
+      const res = await axios.get(`/carts?productId=${id}`);
+      const carts = res.data;
+      console.log(carts);
+
+      if (carts && carts.length > 0) {
+        const cart = carts[0];
+        cart.mount += 1;
+        await axios.put(`/carts/${cart.id}`, cart);
+      } else {
+        const cart = {
+          productId: id,
+          name,
+          image,
+          price,
+          mount: 1,
+        };
+        await axios.post("/carts", cart);
+      }
+      toast.success("Add Cart Success");
+    } catch (error) {
+      toast.error("Add Cart Failed");
+    }
   };
 
   render() {
@@ -45,7 +74,11 @@ class Product extends React.Component {
         </div>
         <div className="p-footer">
           <p className="price">{formatPrice(price)}</p>
-          <button className="add-cart" disabled={status === "unavailable"}>
+          <button
+            className="add-cart"
+            disabled={status === "unavailable"}
+            onClick={this.addCart}
+          >
             <i className="fas fa-shopping-cart"></i>
             <i className="fas fa-exclamation"></i>
           </button>
