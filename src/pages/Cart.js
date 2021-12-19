@@ -1,26 +1,25 @@
 import React from "react";
 // import Header from "components/Header";
 import Layout from "Layout";
+import CartItem from "components/CartItem";
 
 const Cart = () => {
   return (
     <Layout>
       <div className="cart-page">
-        <p className="title has-text-centered">Cart Page</p>
+        <span className="cart-title">Shopping Cart</span>
+        <div className="cart-list">
+          <CartItem />
+          <CartItem />
+          <CartItem />
+        </div>
+        <div className="cart-total">
+          Total:
+          <span className="total-price">NTD 2345</span>
+        </div>
       </div>
     </Layout>
   );
 };
-
-// class Cart extends React.Component {
-//   render() {
-//     return (
-//       <div className="main">
-//         <Header />
-//         <div className="cart-page"></div>
-//       </div>
-//     );
-//   }
-// }
 
 export default Cart;
