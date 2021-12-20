@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { formatPrice } from "commons/helper";
 import axios, * as others from "commons/axios";
 
 const CartItem = (props) => {
   const [mount, setMount] = useState(props.cart.mount);
   const { id, name, image, price } = props.cart || {};
-  const sumPrice = formatPrice(mount * parseInt(price));
+
+  const sumPrice = useMemo(() => {
+    return formatPrice(mount * parseInt(price));
+  }, [mount, price]);
 
   const handleChange = async (e) => {
     const _mount = parseInt(e.target.value);
