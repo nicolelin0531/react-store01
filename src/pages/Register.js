@@ -4,17 +4,22 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
 
-export default function Login(props) {
+export default function Resgister(props) {
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = async (data) => {
-    // 3. 處理登入邏輯
+    // 3. 處理註冊邏輯
     try {
-      const { email, password } = data;
-      const res = await axios.post("/auth/login", { email, password });
+      const { nickname, email, password } = data;
+      const res = await axios.post("/auth/register", {
+        nickname,
+        email,
+        password,
+        type: 0,
+      });
       const jwToken = res.data;
       console.log(jwToken);
       global.auth.setToken(jwToken);
-      toast.success("Login Success");
+      toast.success("Register Success");
       // this.props.navigate("/");
       this.props.history.push("/");
     } catch (error) {
@@ -24,17 +29,34 @@ export default function Login(props) {
     }
   };
 
-  console.log(errors);
-
   return (
     <div className="login-wrapper">
       <form className="box login-box" onSubmit={handleSubmit(onSubmit)}>
+        <div className="field">
+          <label className="label">Nickname</label>
+          <div className="control">
+            <input
+              className={`input ${errors.nickname && "is-danger"}`}
+              type="text"
+              placeholder="Nickname"
+              name="nickname"
+              ref={register({
+                required: "nickname is required",
+              })}
+            />
+            {errors.nickname && (
+              <p className="helper has-text-danger">
+                {errors.nickname.message}
+              </p>
+            )}
+          </div>
+        </div>
         <div className="field">
           <label className="label">Email</label>
           <div className="control">
             <input
               className={`input ${errors.email && "is-danger"}`}
-              type="email"
+              type="text"
               placeholder="Email"
               name="email"
               ref={register({
@@ -75,7 +97,7 @@ export default function Login(props) {
           </div>
         </div>
         <div className="control">
-          <button className="button is-fullwidth is-primary">Login</button>
+          <button className="button is-fullwidth is-primary">Submit</button>
         </div>
       </form>
     </div>
