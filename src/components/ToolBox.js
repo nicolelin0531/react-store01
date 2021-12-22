@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 class ToolBox extends React.Component {
   state = {
@@ -23,6 +24,11 @@ class ToolBox extends React.Component {
 
   goCart = () => {
     // this.props.history.push("cart");
+    if (!global.auth.isLogin()) {
+      this.props.navigate("login");
+      toast.info("Please Login First");
+      return;
+    }
     this.props.navigate("cart");
   };
 

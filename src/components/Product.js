@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Panel from "components/Panel";
 import { formatPrice } from "commons/helper";
 import EditInventory from "components/EditInventory";
+import { useNavigate } from "react-router-dom";
 
 class Product extends React.Component {
   toEdit = () => {
@@ -23,6 +24,11 @@ class Product extends React.Component {
   };
 
   addCart = async () => {
+    if (!global.auth.isLogin()) {
+      this.props.navigate("login");
+      toast.info("Please Login First");
+      return;
+    }
     try {
       const { id, name, image, price } = this.props.product;
       const res = await axios.get(`/carts?productId=${id}`);
@@ -50,6 +56,17 @@ class Product extends React.Component {
     }
   };
 
+  renderManagerBtn = () => {
+    const user = global.auth.getUser() || {};
+    if (user.type === 1) {
+      <div className="p-head has-text-right" onClick={this.toEdit}>
+        <span className="icon edit-btn">
+          <i className="fas fa-sliders-h"></i>
+        </span>
+      </div>;
+    }
+  };
+
   render() {
     const { name, image, tags, price, status } = this.props.product;
     const _pClass = {
@@ -59,11 +76,7 @@ class Product extends React.Component {
     return (
       <div className={_pClass[status]}>
         <div className="p-content">
-          <div className="p-head has-text-right" onClick={this.toEdit}>
-            <span className="icon edit-btn">
-              <i className="fas fa-sliders-h"></i>
-            </span>
-          </div>
+          {this.renderManagerBtn()}
           <div className="img-wrapper">
             <div className="out-stock-text">Out of Stock</div>
             <figure className="img is-4by3">
@@ -88,5 +101,9 @@ class Product extends React.Component {
     );
   }
 }
+function WithNavigateToolBox(props) {
+  let navigate = useNavigate();
+  return <Product {...props} navigate={navigate} />;
+}
 
-export default Product;
+export default WithNavigateToolBox;

@@ -2,7 +2,7 @@ import React from "react";
 import axios from "commons/axios";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login(props) {
   const { register, handleSubmit, errors } = useForm();
@@ -15,8 +15,8 @@ export default function Login(props) {
       console.log(jwToken);
       global.auth.setToken(jwToken);
       toast.success("Login Success");
-      // this.props.navigate("/");
-      this.props.history.push("/");
+      this.props.navigate("/");
+      // this.props.history.push("/");
     } catch (error) {
       console.log(error.response.data);
       const message = error.response.data.message;
