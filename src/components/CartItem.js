@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { formatPrice } from "commons/helper";
-import axios, * as others from "commons/axios";
+import axios from "commons/axios";
 
 const CartItem = (props) => {
   const [mount, setMount] = useState(props.cart.mount);
