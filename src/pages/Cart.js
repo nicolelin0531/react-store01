@@ -9,7 +9,8 @@ const Cart = () => {
   const [carts, setCarts] = useState([]);
 
   useEffect(() => {
-    axios.get("/carts").then((res) => {
+    const user = global.auth.getUser() || {}; //獲取當前登入對象
+    axios.get(`/carts?userId = ${user.email}`).then((res) => {
       setCarts(res.data);
     });
   }, []);

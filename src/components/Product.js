@@ -30,6 +30,7 @@ class Product extends React.Component {
       return;
     }
     try {
+      const user = global.auth.getUser() || {}; //獲取當前登入對象
       const { id, name, image, price } = this.props.product;
       const res = await axios.get(`/carts?productId=${id}`);
       const carts = res.data;
@@ -46,6 +47,7 @@ class Product extends React.Component {
           image,
           price,
           mount: 1,
+          userId: user.email,
         };
         await axios.post("/carts", cart);
       }
