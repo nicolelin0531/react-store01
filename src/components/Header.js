@@ -4,8 +4,6 @@ import Panel from "components/Panel";
 import UserProfile from "components/UserProfile";
 
 const Header = (props) => {
-  // const navigate = useNavigate();
-
   const toProfile = () => {
     Panel.open({
       component: UserProfile,
@@ -15,7 +13,8 @@ const Header = (props) => {
       callback: (data) => {
         console.log(data);
         if (data === "logout") {
-          props.history.go(0);
+          // props.history.go(0);
+          window.location.reload(true);
         }
       },
     });

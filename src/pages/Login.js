@@ -5,26 +5,28 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export default function Login(props) {
-  const { register, handleSubmit, errors } = useForm();
+  let navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const onSubmit = async (data) => {
-    // 3. 處理登入邏輯
+    // 處理登入邏輯
     try {
       const { email, password } = data;
       const res = await axios.post("/auth/login", { email, password });
       const jwToken = res.data;
-      console.log(jwToken);
       global.auth.setToken(jwToken);
       toast.success("Login Success");
-      this.props.navigate("/");
-      // this.props.history.push("/");
+      navigate("/", { replace: true });
     } catch (error) {
-      console.log(error.response.data);
       const message = error.response.data.message;
       toast.error(message);
     }
   };
-
-  console.log(errors);
 
   return (
     <div className="login-wrapper">
@@ -37,7 +39,7 @@ export default function Login(props) {
               type="email"
               placeholder="Email"
               name="email"
-              ref={register({
+              {...register("email", {
                 required: "email is required",
                 pattern: {
                   value:
@@ -59,7 +61,7 @@ export default function Login(props) {
               type="password"
               placeholder="Password"
               name="password"
-              ref={register({
+              {...register("password", {
                 required: "password is required",
                 minLength: {
                   value: 6,

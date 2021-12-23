@@ -2,12 +2,19 @@ import React from "react";
 import axios from "commons/axios";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function Resgister(props) {
-  const { register, handleSubmit, errors } = useForm();
+export default function Login(props) {
+  let navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const onSubmit = async (data) => {
-    // 3. 處理註冊邏輯
+    // 處理註冊邏輯
     try {
       const { nickname, email, password } = data;
       const res = await axios.post("/auth/register", {
@@ -17,13 +24,11 @@ export default function Resgister(props) {
         type: 0,
       });
       const jwToken = res.data;
-      console.log(jwToken);
       global.auth.setToken(jwToken);
       toast.success("Register Success");
-      // this.props.navigate("/");
-      this.props.history.push("/");
+      // 跳轉首頁
+      navigate("/", { replace: true });
     } catch (error) {
-      console.log(error.response.data);
       const message = error.response.data.message;
       toast.error(message);
     }
@@ -40,7 +45,7 @@ export default function Resgister(props) {
               type="text"
               placeholder="Nickname"
               name="nickname"
-              ref={register({
+              {...register("nickname", {
                 required: "nickname is required",
               })}
             />
@@ -59,7 +64,7 @@ export default function Resgister(props) {
               type="text"
               placeholder="Email"
               name="email"
-              ref={register({
+              {...register("email", {
                 required: "email is required",
                 pattern: {
                   value:
@@ -81,7 +86,7 @@ export default function Resgister(props) {
               type="password"
               placeholder="Password"
               name="password"
-              ref={register({
+              {...register("password", {
                 required: "password is required",
                 minLength: {
                   value: 6,

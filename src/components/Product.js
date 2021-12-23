@@ -15,7 +15,6 @@ class Product extends React.Component {
         deleteProduct: this.props.delete,
       },
       callback: (data) => {
-        console.log(data);
         if (data) {
           this.props.update(data);
         }
@@ -34,7 +33,6 @@ class Product extends React.Component {
       const { id, name, image, price } = this.props.product;
       const res = await axios.get(`/carts?productId=${id}`);
       const carts = res.data;
-      console.log(carts);
 
       if (carts && carts.length > 0) {
         const cart = carts[0];
@@ -61,11 +59,13 @@ class Product extends React.Component {
   renderManagerBtn = () => {
     const user = global.auth.getUser() || {};
     if (user.type === 1) {
-      <div className="p-head has-text-right" onClick={this.toEdit}>
-        <span className="icon edit-btn">
-          <i className="fas fa-sliders-h"></i>
-        </span>
-      </div>;
+      return (
+        <div className="p-head has-text-right" onClick={this.toEdit}>
+          <span className="icon edit-btn">
+            <i className="fas fa-sliders-h"></i>
+          </span>
+        </div>
+      );
     }
   };
 

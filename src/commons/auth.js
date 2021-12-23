@@ -11,13 +11,13 @@ const getToken = (token) => {
 
 const isLogin = () => {
   const jwToken = getToken();
-  return !!jwToken && isTokenIspired(jwToken);
+  return !!jwToken && !isTokenExpired(jwToken);
 };
 
-const isTokenIspired = (token) => {
+const isTokenExpired = (token) => {
   try {
     const _info = decode(token);
-    if (_info.exp < Date.now / 1000) {
+    if (_info.exp < Date.now() / 1000) {
       return true; //超時token失效
     } else return false;
   } catch (error) {
