@@ -89,7 +89,7 @@ class Product extends React.Component {
           <p className="p-name">{name}</p>
         </div>
         <div className="p-footer">
-          <p className="price">{formatPrice(price)}</p>
+          <p className="price">NTD {formatPrice(price)}</p>
           <button
             className="add-cart"
             disabled={status === "unavailable"}
