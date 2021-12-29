@@ -5,6 +5,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "css/app.scss";
 import "css/style.scss";
+import "css/fs-icon.ttf";
+import "css/fs_style.css";
+import "css/fs_theme.css";
+import "css/fs_original.css";
 import "commons/auth";
 
 ReactDom.render(

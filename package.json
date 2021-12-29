@@ -1,5 +1,5 @@
 {
-  "name": "react-store01",
+  "name": "post-general",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -22,7 +22,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "serve --single ./build/Users/nicolelin/Documents/GitHub/react-store01",
+    "start": "serve --single ./build/Users/nicolelin/Documents/GitHub/Post-General",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

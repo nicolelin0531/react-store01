@@ -1,15 +1,18 @@
 import React from "react";
-import Products from "components/Products";
-import Layout from "Layout";
+import Footer from "./Footer";
+import Header01 from "./Header01";
+import Main from "./Main";
 
-class App extends React.Component {
+class Header extends React.Component {
   render() {
     return (
-      <Layout>
-        <Products />
-      </Layout>
+      <div className="post-general">
+        <Header01></Header01>
+        <Main></Main>
+        <Footer></Footer>
+      </div>
     );
   }
 }
 
-export default App;
+export default Header;
